@@ -4,7 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-// En MySQL el esquema se crea con database/novena_database.sql; estas migraciones lo replican para los tests.
 return new class extends Migration
 {
     /**
