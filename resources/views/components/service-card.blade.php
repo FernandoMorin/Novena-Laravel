@@ -1,6 +1,6 @@
-@props(['title'])
+@props(['title', 'delay' => 0])
 
-<article class="service-card">
+<article class="service-card" data-reveal="right" style="--reveal-delay: {{ $delay }}s">
     <header class="service-head">
         <img src="{{ asset('Recursos/flecha1.png') }}" alt="" class="ico-diagonal" />
         <h3>{{ $title }}</h3>

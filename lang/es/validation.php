@@ -9,14 +9,19 @@ return [
     'numeric' => 'El campo :attribute debe ser un número.',
     'image' => 'El archivo debe ser una imagen.',
     'confirmed' => 'Las contraseñas no coinciden.',
-    'unique' => 'El :attribute ya está registrado.',
-    'exists' => 'Selecciona una :attribute válida.',
-    'gt' => ['numeric' => 'El :attribute debe ser mayor a :value.'],
+    'current_password' => 'La contraseña actual no es correcta.',
+    'min' => [
+        'string' => 'La :attribute debe tener al menos :min caracteres.',
+        'numeric' => 'La :attribute debe ser al menos :min.',
+    ],
     'max' => [
         'string' => 'El campo :attribute no debe pasar de :max caracteres.',
         'file' => 'La imagen no debe pesar más de :max KB.',
+        'numeric' => 'La :attribute no puede ser mayor a :max.',
     ],
-    'min' => ['string' => 'La :attribute debe tener al menos :min caracteres.'],
+    'unique' => 'El :attribute ya está registrado.',
+    'exists' => 'Selecciona una :attribute válida.',
+    'gt' => ['numeric' => 'El :attribute debe ser mayor a :value.'],
 
     'attributes' => [
         'name' => 'nombre',
@@ -28,5 +33,7 @@ return [
         'price' => 'precio',
         'category_id' => 'categoría',
         'image' => 'imagen',
+        'quantity' => 'cantidad',
+        'current_password' => 'contraseña actual',
     ],
 ];

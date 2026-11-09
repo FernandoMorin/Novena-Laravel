@@ -1,84 +1,65 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const openBtn = document.querySelector('.btn-login');
-    const overlay = document.querySelector('.login-overlay');
-    const closeBtn = document.querySelector('.login-close');
-
+    // ========== OVERLAY DE LOGIN / REGISTRO ==========
     const loginForm = document.querySelector('.login-form');
     const registerForm = document.querySelector('.register-form');
     const tLogin = document.querySelector('.login-title-login');
     const tReg = document.querySelector('.login-title-register');
 
-    const open = () => document.body.classList.add('login-open');
-    const close = () => document.body.classList.remove('login-open');
-
-    openBtn?.addEventListener('click', e => {
-        e.preventDefault();
-        open();
+    const showLogin = () => {
         loginForm.style.display = 'block';
         tLogin.style.display = 'block';
         registerForm.style.display = 'none';
         tReg.style.display = 'none';
-    });
+    };
 
-    closeBtn?.addEventListener('click', close);
-
-    document.querySelector('.link-register')?.addEventListener('click', e => {
-        e.preventDefault();
+    const showRegister = () => {
         loginForm.style.display = 'none';
         tLogin.style.display = 'none';
         registerForm.style.display = 'block';
         tReg.style.display = 'block';
+    };
+
+    // Cualquier botón con .btn-login o data-open-login abre el overlay (header, carrito...).
+    document.querySelectorAll('.btn-login, [data-open-login]').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            if (!loginForm) return;
+            showLogin();
+            document.body.classList.add('login-open');
+        });
+    });
+
+    document.querySelector('.login-close')?.addEventListener('click', () => document.body.classList.remove('login-open'));
+
+    document.querySelector('.link-register')?.addEventListener('click', e => {
+        e.preventDefault();
+        showRegister();
     });
 
     document.querySelector('.link-back-login')?.addEventListener('click', e => {
         e.preventDefault();
-        loginForm.style.display = 'block';
-        tLogin.style.display = 'block';
-        registerForm.style.display = 'none';
-        tReg.style.display = 'none';
-    });
-});
-document.addEventListener('DOMContentLoaded', () => {
-    // ========== MODAL DE PRODUCTO ==========
-    const cards = document.querySelectorAll('.products-grid .product-card');
-    const modal = document.getElementById('product-modal');
-    const modalImg = document.getElementById('modal-product-image');
-    const modalName = document.getElementById('modal-product-name');
-    const modalPrice = document.getElementById('modal-product-price');
-    const modalDesc = document.getElementById('modal-product-description');
-    const modalClose = document.querySelector('.product-modal-close');
-    const modalBackdrop = document.querySelector('.product-modal-backdrop');
-
-    const openModal = (card) => {
-        if (!modal) return;
-        modalImg.src = card.dataset.image || '';
-        modalImg.alt = card.dataset.name || '';
-        modalName.textContent = card.dataset.name || '';
-        modalPrice.textContent = card.dataset.price || '';
-        modalDesc.textContent = card.dataset.description || '';
-
-        modal.setAttribute('aria-hidden', 'false');
-        modal.classList.add('is-open');
-        document.body.classList.add('modal-open');
-    };
-
-    const closeModal = () => {
-        if (!modal) return;
-        modal.setAttribute('aria-hidden', 'true');
-        modal.classList.remove('is-open');
-        document.body.classList.remove('modal-open');
-    };
-
-    cards.forEach(card => {
-        card.addEventListener('click', () => openModal(card));
+        showLogin();
     });
 
-    modalClose?.addEventListener('click', closeModal);
-    modalBackdrop?.addEventListener('click', closeModal);
+    // ========== AVISOS (toasts de Bootstrap) ==========
+    document.querySelectorAll('.toast').forEach(el => bootstrap.Toast.getOrCreateInstance(el, { delay: 4000 }).show());
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal?.classList.contains('is-open')) {
-            closeModal();
-        }
-    });
+    // ========== ANIMACIÓN DE ENTRADA AL HACER SCROLL ==========
+    // Los elementos con data-reveal="left|right|up" entran deslizándose cuando aparecen en pantalla.
+    const revealables = document.querySelectorAll('[data-reveal]');
+
+    if (!('IntersectionObserver' in window)) {
+        revealables.forEach(el => el.classList.add('is-visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target); // solo se anima la primera vez
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealables.forEach(el => observer.observe(el));
 });

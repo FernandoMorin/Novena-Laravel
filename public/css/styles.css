@@ -1108,12 +1108,105 @@ body.modal-open {
     }
 }
 
-/* Laravel: el logout es un formulario POST; se ve igual que un enlace del header */
-.header-right{ gap:1.2vw; padding-right:var(--gutter-x); }
-.header-right:has(.btn-login){ padding-right:0; gap:0; }
-.logout-form{ margin:0; }
-.btn-admin, .btn-logout{
-  background:none; border:none; padding:0; cursor:pointer;
-  font:inherit; font-weight:600; color:var(--brand); text-decoration:none;
+/* =========================================================
+   LARAVEL: tienda del cliente (Bootstrap 5 + estilos de marca)
+   ========================================================= */
+
+/* Bootstrap también define .navbar; aquí se anulan sus estilos para conservar el header original. */
+.navbar{ flex-wrap:nowrap; padding:0; }
+
+/* Color de marca aplicado a los componentes de Bootstrap */
+.text-brand{ color:var(--brand) !important; }
+.btn-brand{
+  --bs-btn-color:#fff; --bs-btn-bg:var(--brand); --bs-btn-border-color:var(--brand);
+  --bs-btn-hover-color:#fff; --bs-btn-hover-bg:color-mix(in srgb, var(--brand) 85%, black); --bs-btn-hover-border-color:color-mix(in srgb, var(--brand) 85%, black);
+  --bs-btn-active-color:#fff; --bs-btn-active-bg:color-mix(in srgb, var(--brand) 75%, black); --bs-btn-active-border-color:color-mix(in srgb, var(--brand) 75%, black);
+  --bs-btn-disabled-bg:var(--brand); --bs-btn-disabled-border-color:var(--brand);
+  font-weight:600;
 }
-.btn-admin:hover, .btn-logout:hover{ text-decoration:underline; }
+.pagination{ --bs-pagination-color:var(--brand); --bs-pagination-active-bg:var(--brand); --bs-pagination-active-border-color:var(--brand); --bs-pagination-hover-color:var(--brand); }
+.breadcrumb a{ color:var(--brand); }
+.form-control:focus{ border-color:color-mix(in srgb, var(--brand) 50%, white); box-shadow:0 0 0 .25rem color-mix(in srgb, var(--brand) 20%, transparent); }
+
+/* ---------- Header: carrito + menú de usuario ---------- */
+.header-right{ gap:1.4vw; }
+.header-right:not(:has(.btn-login)){ padding-right:var(--gutter-x); }
+.header-cart{
+  position:relative; display:inline-flex; align-items:center;
+  color:#333; font-size:1.35rem; text-decoration:none;
+  transition:transform .2s ease;
+}
+.header-cart:hover{ color:var(--brand); transform:translateY(-2px); }
+.header-cart .badge{ position:absolute; top:-.35rem; right:-.7rem; font-size:.65rem; }
+.user-menu{
+  background:none; border:none; padding:0;
+  font-weight:600; color:#333; font-size:clamp(.85rem, 1.1vw, 1.05rem);
+}
+.user-menu:hover{ color:var(--brand); }
+.dropdown-menu{ --bs-dropdown-link-active-bg:var(--brand); }
+
+/* ---------- Tienda ---------- */
+.store-toolbar{ margin-bottom:2rem; }
+.store-toolbar .category-filter label{ margin:0; }
+.search-box{ box-shadow:0 1px 4px rgba(0,0,0,.12); border-radius:999px; overflow:hidden; }
+.search-box .input-group-text{ background:#fff; border:none; padding-left:1.1rem; }
+.search-box .form-control{ border:none; box-shadow:none; }
+
+.store-section-title{
+  font-family:Georgia, "Times New Roman", serif; font-style:italic; font-weight:700;
+  color:var(--brand); font-size:clamp(1.3rem, 2vw, 1.8rem); margin-bottom:1rem;
+}
+
+/* La tarjeta ahora es un enlace a la página del producto */
+a.product-card{ color:inherit; text-decoration:none; height:100%; }
+.product-card-caption{ display:flex; flex-direction:column; gap:.15rem; }
+.product-card-caption .product-card-name{ margin:0; font-size:.95rem; }
+.product-card-caption .product-card-price{ margin:0; color:var(--brand); font-weight:700; }
+.product-card.is-featured .product-card-caption .product-card-price{ color:#fff; }
+.product-card .product-thumb img{ transition:transform .4s ease; }
+.product-card:hover .product-thumb img{ transform:scale(1.05); }
+
+/* ---------- Páginas del cliente (producto, carrito, pedidos, perfil) ---------- */
+.page{
+  min-height:100vh;
+  padding-top:calc(var(--header-h) + 1.5rem);
+  padding-bottom:3rem;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.08) 100%),
+    url("../Recursos/bg2.png") center/cover fixed no-repeat;
+}
+.page-title{
+  font-family:Georgia, "Times New Roman", serif; font-style:italic; font-weight:700;
+  color:var(--brand); margin-bottom:1.5rem;
+}
+.page .card{ background:rgba(255,255,255,.96); }
+.product-detail-img{ width:100%; aspect-ratio:1; max-height:70vh; object-fit:cover; background:#fff; }
+.product-detail-name{ font-family:Georgia, "Times New Roman", serif; font-weight:700; }
+.cart-thumb{ width:3.5rem; height:3.5rem; object-fit:cover; }
+.cart-summary{ top:calc(var(--header-h) + 1rem); }
+
+/* ---------- Animación de entrada al hacer scroll ----------
+   Solo con JS (html.js); scripts.js añade .is-visible cuando el elemento entra en pantalla. */
+.js [data-reveal]{
+  opacity:0;
+  transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  transition-delay:var(--reveal-delay, 0s);
+}
+.js [data-reveal="left"]{ transform:translateX(-60px); }
+.js [data-reveal="right"]{ transform:translateX(60px); }
+.js [data-reveal="up"]{ transform:translateY(30px); }
+.js [data-reveal].is-visible{ opacity:1; transform:none; }
+
+@media (prefers-reduced-motion: reduce){
+  .js [data-reveal]{ opacity:1; transform:none; transition:none; }
+  .product-card .product-thumb img, .header-cart{ transition:none; }
+}
+
+/* ---------- Menú móvil (offcanvas de Bootstrap) ---------- */
+.menu-toggle{ display:none; background:none; border:none; padding:0 .6rem 0 0; font-size:1.6rem; color:#333; line-height:1; }
+.mobile-menu .nav-link{ color:#333; font-weight:600; font-size:1.1rem; padding:.7rem 0; border-bottom:1px solid rgba(0,0,0,.06); }
+.mobile-menu .nav-link:hover{ color:var(--brand); }
+@media (max-width: 1024px){
+  .menu-toggle{ display:inline-flex; align-items:center; }
+  .header-left{ align-items:center; }
+}

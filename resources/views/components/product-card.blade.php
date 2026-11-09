@@ -1,15 +1,13 @@
 @props(['product'])
 
-{{-- Los data-* los lee scripts.js para llenar el modal de producto. --}}
-<article @class(['product-card', 'is-featured' => $product->is_featured])
-         data-name="{{ $product->name }}"
-         data-price="{{ number_format($product->price, 2) }}$"
-         data-description="{{ $product->description }}"
-         data-image="{{ asset($product->image_path) }}">
-
+<a href="{{ route('products.show', $product) }}"
+   {{ $attributes->class(['product-card', 'is-featured' => $product->is_featured]) }} data-reveal="up">
     <div class="product-thumb">
-        <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}">
+        <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}" loading="lazy">
     </div>
 
-    <div class="caption product-card-caption">{{ $product->name }}</div>
-</article>
+    <div class="caption product-card-caption">
+        <span class="product-card-name">{{ $product->name }}</span>
+        <x-price :amount="$product->price" class="product-card-price" />
+    </div>
+</a>

@@ -19,7 +19,8 @@ class NovenaTest extends TestCase
         $this->seed(DatabaseSeeder::class);
 
         $this->assertSame(4, Category::count());
-        $this->assertSame(2, Product::count());
+        $this->assertSame(13, Product::count());
+        $this->assertSame(3, User::firstWhere('email', 'user@novena.com')->orders()->count());
         $this->post('/login', ['email' => 'admin@novena.com', 'password' => 'admin123']);
         $this->get('/admin')->assertOk();
     }
@@ -116,7 +117,7 @@ class NovenaTest extends TestCase
         ])->assertSessionHasNoErrors();
         $this->assertSame('Taza grande', $product->fresh()->name);
         $this->assertFalse($product->fresh()->is_active);
-        $this->assertSame('Recursos/producto1_1765211937.png', $product->fresh()->image_path);
+        $this->assertSame($product->image_path, $product->fresh()->image_path);
 
         $this->put("/admin/productos/{$product->id}", ['name' => 'X', 'price' => 0, 'category_id' => $product->category_id])
             ->assertSessionHasErrorsIn('edit', 'price');

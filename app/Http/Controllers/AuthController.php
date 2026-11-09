@@ -19,7 +19,8 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return back();
+        // intended: si lo mandaron a iniciar sesión desde /perfil o /mis-pedidos, regresa ahí.
+        return redirect()->intended(url()->previous())->with('status', '¡Hola de nuevo, '.$request->user()->name.'!');
     }
 
     public function register(RegisterRequest $request): RedirectResponse
@@ -28,7 +29,7 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return back();
+        return redirect()->intended(url()->previous())->with('status', '¡Bienvenido a Novena Studio, '.$user->name.'!');
     }
 
     public function logout(Request $request): RedirectResponse

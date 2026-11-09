@@ -17,7 +17,7 @@ class ProductFactory extends Factory
             'name' => fake()->words(2, true),
             'description' => fake()->sentence(),
             'price' => fake()->randomFloat(2, 50, 500),
-            'image_path' => 'Recursos/producto1_1765211937.png',
+            'image_path' => fake()->randomElement(['Recursos/producto1_1765211937.png', 'Recursos/Flores_1765211859.png']),
             'is_featured' => false,
             'is_active' => true,
             'category_id' => Category::factory(),

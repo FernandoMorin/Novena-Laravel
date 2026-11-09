@@ -7,14 +7,14 @@
         <div class="hero-overlay" aria-hidden="true"></div>
 
         <div class="hero-layout">
-            <div class="title-block">
+            <div class="title-block" data-reveal="left">
                 <h1 class="hero-title">
                     <span class="line-1">Diseña</span>
                     <span class="line-2">el <em>futuro</em></span>
                 </h1>
             </div>
 
-            <div class="cta-row">
+            <div class="cta-row" data-reveal="up" style="--reveal-delay: .3s">
                 <img src="{{ asset('Recursos/flecha.png') }}" alt="Flecha decorativa" class="arrow-img">
                 <a href="#about" class="cta-outline">Conócenos</a>
             </div>
@@ -24,7 +24,7 @@
     <!-- ================= ABOUT ================= -->
     <section id="about" class="about">
         <div class="about-top">
-            <div class="about-titlecard">
+            <div class="about-titlecard" data-reveal="left">
                 <div class="about-title">
                     <h2 class="about-line1">Acerca de</h2>
                     <hr class="about-divider">
@@ -35,26 +35,26 @@
                 </div>
             </div>
 
-            <figure class="about-media">
+            <figure class="about-media" data-reveal="right">
                 <img src="{{ asset('Recursos/ref1.png') }}" alt="Bocetos de diseño industrial en mesa" />
             </figure>
         </div>
 
         <div class="about-bottom">
-            <p class="about-paragraph">
+            <p class="about-paragraph" data-reveal="left">
                 En Novena Studio unimos el diseño gráfico y el diseño industrial para transformar ideas en experiencias que inspiran.
                 Nos apasiona crear proyectos donde la estética y la funcionalidad se encuentran, dando vida a productos, marcas y
                 detalles que conectan con las personas. Cada diseño nace de la creatividad, la técnica y el deseo de innovar.
                 En Novena Studio creemos que el diseño no solo embellece, también construye posibilidades.
             </p>
-            <p class="about-tagline"><em>Diseña el futuro con nosotros.</em></p>
+            <p class="about-tagline" data-reveal="right" style="--reveal-delay: .2s"><em>Diseña el futuro con nosotros.</em></p>
         </div>
     </section>
 
     <!-- ================= SERVICIOS ================= -->
     <section id="servicios" class="services">
         <div class="services-inner">
-            <div class="services-left">
+            <div class="services-left" data-reveal="left">
                 <h2 class="services-heading">
                     <span>Nuestros</span>
                     <span class="light">servicios</span>
@@ -66,15 +66,15 @@
                     Branding, identidad visual, papelería corporativa y campañas impresas que capturan la personalidad de tu marca.
                 </x-service-card>
 
-                <x-service-card title="Diseño industrial">
+                <x-service-card title="Diseño industrial" delay=".1">
                     Creación de productos funcionales, mobiliario, prototipos y objetos con materiales seleccionados, pensando en la estética y la usabilidad.
                 </x-service-card>
 
-                <x-service-card title="Productos personalizados">
+                <x-service-card title="Productos personalizados" delay=".2">
                     Artículos únicos hechos a medida: invitaciones, packaging, regalos corporativos y decoración que se adapte a tu estilo.
                 </x-service-card>
 
-                <x-service-card title="Consultoría creativa">
+                <x-service-card title="Consultoría creativa" delay=".3">
                     Acompañamiento desde la idea hasta la ejecución: dirección artística, materiales, acabados y conceptos que destaquen.
                 </x-service-card>
             </div>
